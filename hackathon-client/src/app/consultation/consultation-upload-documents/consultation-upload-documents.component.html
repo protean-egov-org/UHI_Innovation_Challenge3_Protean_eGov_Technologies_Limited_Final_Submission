@@ -1,0 +1,44 @@
+<ngx-spinner>
+  <p class="loading">Loading...</p>
+</ngx-spinner>
+<mat-table [dataSource]="dataSource" class="clinic-table">
+  <ng-container matColumnDef="reportname">
+    <mat-header-cell *matHeaderCellDef> <b> Report Type </b> </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="reportname" width="10%"> {{ element.reporttype }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="view">
+    <mat-header-cell *matHeaderCellDef class="view"> <b> View </b> </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <img src="assets/img/view-red.svg" ngbTooltip="View" role="button" class="w-auto m-0" (click)="view(element)" />
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="download">
+    <mat-header-cell *matHeaderCellDef class="download">
+      <b>
+        Download
+        <img class="refresh" role="button" src="assets/img/referesh.svg" />
+      </b>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" [class]="element.download">
+      <img
+        src="assets/img/download.svg"
+        ngbTooltip="Download"
+        (click)="download(element)"
+        role="button"
+        class="w-auto m-0"
+      />
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+</mat-table>
+<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"> </mat-paginator>
+<div>
+  <div class="back-btn" *ngIf="stepper.selectedIndex !== 0"><a role="button" (click)="goBack()">Prev</a></div>
+  <div class="next-btn">
+    <a role="button" (click)="goForward()">Next</a>
+  </div>
+</div>

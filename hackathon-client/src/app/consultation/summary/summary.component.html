@@ -1,0 +1,50 @@
+<div class="tabsection2-title">Prescription Summary</div>
+
+<div class="report-detail2">
+  <div class="detail-icon2">
+    <img src="assets/img/symptoms2.svg" alt="" />
+  </div>
+  <div class="detail-title">Symptoms</div>
+  <div class="detail-text2">{{ symptomDetails }}</div>
+</div>
+
+<div class="report-detail2">
+  <div class="detail-icon2">
+    <img src="assets/img/diagnosis2.svg" alt="" />
+  </div>
+  <div class="detail-title">Provisional Diagnosis</div>
+  <div class="detail-text2">{{ diagnosisDetails }}</div>
+</div>
+
+<div class="report-detail2">
+  <div class="detail-icon2">
+    <img src="assets/img/medicine2.svg" alt="" />
+  </div>
+  <div class="detail-title">Medicines</div>
+  <div class="detail-text2">
+    <span> {{ medicineDetails }}</span>
+  </div>
+</div>
+
+<div class="report-detail2">
+  <div class="detail-icon2">
+    <img src="assets/img/advice2.svg" alt="" />
+  </div>
+  <div class="detail-title">Advice</div>
+  <div class="detail-text2">
+    <span> {{ adviceDetails }} </span>
+  </div>
+</div>
+
+<div class="report-detail2">
+  <div class="detail-icon2 vital-icon">
+    <img src="assets/img/vaccine-management.png" alt="" />
+  </div>
+  <div class="detail-title">Vital</div>
+  <div class="detail-text2 vital-details">
+    <div>Temperature: {{ vital.temperature }}</div>
+    <div>Respiratory rate: {{ vital.heartRate }}</div>
+    <div>Heart rate(Pulse rate): {{ vital.bloodPressureMin }}</div>
+    <div>Blood pressure: {{ vital.bloodPressureMin }}/{{ vital.bloodPressureMax }}</div>
+  </div>
+</div>
