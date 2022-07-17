@@ -1,0 +1,185 @@
+<div class="mb-5 ms-1">
+  <div class="main-container">
+    <div class="page-title d-flex align-items-center">
+      Appointments
+      <div class="ms-auto">
+        <mat-form-field>
+          <mat-label>Patient</mat-label>
+          <mat-select [formControl]="patientControl">
+            <mat-option *ngFor="let patient of patients" [value]="patient">
+              {{ patient.ptName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="patient-detail accordion_container">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header (click)="isExpanded = !isExpanded; setPlusMinus()">
+            <div class="patient-photo">
+              <img src="assets/images/img_avatar.png" />
+            </div>
+            <div class="patient-name">{{ patient?.ptName }}</div>
+
+            <div class="detail-area1 mob">
+              <div class="detail-icon">
+                <img src="assets/img/appointment-id2.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Appointment ID<br /><span> {{ patient?.appointmentId }} </span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area12">
+              <div class="detail-icon">
+                <img src="assets/img/blood-group.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Blood Group<br /><span> {{ patient?.bloodGrp }}</span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area13">
+              <div class="detail-icon">
+                <img src="assets/img/height.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Height <br /><span> {{ patient?.height }}</span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area14">
+              <div class="detail-icon">
+                <img src="assets/img/weight.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Weight <br /><span> {{ patient?.weight }}</span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area15">
+              <div class="detail-icon">
+                <img src="assets/img/gender.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Gender<br /><span>{{ patient?.gender }}</span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area6">
+              <div class="detail-icon">
+                <img src="assets/img/date-of-birth.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Date of Birth<br /><span>{{ patient?.dob }}</span>
+              </div>
+            </div>
+
+            <span class="plusminus">{{ plusMinus }}</span>
+          </mat-expansion-panel-header>
+          <div class="accordion_body">
+            <div class="detail-area1 detail-area7">
+              <div class="detail-icon">
+                <img src="assets/img/e-mail.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Email Address <br /><span>
+                  <a>{{ patient?.email }}</a></span
+                >
+              </div>
+            </div>
+            <div class="detail-area1 detail-area8">
+              <div class="detail-icon">
+                <img src="assets/img/mobile-number.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                Mobile No. <br /><span>{{ patient?.mobileNo }}</span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area9">
+              <div class="detail-icon">
+                <img src="assets/img/appointment-id2.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                ABHA ID <br /><span> {{ patient?.abhaId }} </span>
+              </div>
+            </div>
+            <div class="detail-area1 detail-area10">
+              <div class="detail-icon">
+                <img src="assets/img/appointment-id2.svg" alt="" />
+              </div>
+              <div class="detail-text">
+                ABHA Number <br /><span> {{ patient?.abhaNo }} </span>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <!--  <div class="report-section"><span>Patient Reported Symptoms :</span> Fever</div> -->
+    <div class="patient-tabsection">
+      <div id="parentHorizontalTab">
+        <mat-horizontal-stepper labelPosition="bottom" #stepper>
+          <mat-step>
+            <ng-template matStepLabel>
+              <div class="stepper-header">
+                <span class="tab-icon"><img src="assets/img/view-documents.svg" alt="" /></span>
+                <span class="tab-title">View Documents/ Reports</span>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="stepper.selectedIndex === 0">
+              <app-consultation-upload-documents [stepper]="stepper"></app-consultation-upload-documents>
+            </ng-container>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>
+              <div class="stepper-header">
+                <span class="tab-icon"><img src="assets/img/tab-cal-icon.svg" alt="" /></span>
+                <span class="tab-title">View Historical Completed Appointment</span>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="stepper.selectedIndex === 1">
+              <app-consultation-historical-completed [stepper]="stepper"></app-consultation-historical-completed>
+            </ng-container>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>
+              <div class="stepper-header">
+                <span class="tab-icon"><img src="assets/img/view-documents.svg" alt="" /></span>
+                <span class="tab-title">Fetch New Records</span>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="stepper.selectedIndex === 2">
+              <app-consultation-fetch-record [stepper]="stepper"></app-consultation-fetch-record>
+            </ng-container>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>
+              <div class="stepper-header">
+                <span class="tab-icon" style="background-color: darkred"
+                  ><img src="assets/img/details.svg" alt=""
+                /></span>
+                <span class="tab-title">Create or Upload Prescription </span>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="stepper.selectedIndex === 3">
+              <app-consultation-details [stepper]="stepper"></app-consultation-details>
+            </ng-container>
+          </mat-step>
+          <!--   <mat-step>
+            <ng-template matStepLabel>
+              <div class="stepper-header">
+                <span class="tab-icon"><img src="assets/img/prescriptions.svg" alt="" /></span>
+                <span class="tab-title">Save & Submit Prescription </span>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="stepper.selectedIndex === 4">
+              <app-consultation-priscription [stepper]="stepper"></app-consultation-priscription>
+            </ng-container>
+          </mat-step> -->
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+    <div class="patient-tabsection2">
+      <app-summary *ngIf="rightView == 'summary'"></app-summary>
+      <app-chart *ngIf="rightView == 'chart'"></app-chart>
+      <app-records *ngIf="rightView == 'records'"></app-records>
+    </div>
+  </div>
+</div>

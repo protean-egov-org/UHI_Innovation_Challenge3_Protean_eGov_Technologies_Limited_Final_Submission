@@ -1,0 +1,72 @@
+<div class="mt-2">
+  <!--  <table mat-table [dataSource]="dataSource" class="clinic-table">
+    <ng-container matColumnDef="name">
+      <th mat-table *matHeaderCellDef></th>
+      <th></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="form-icon">
+          <img src="assets/img/{{ element.img }}.svg" alt="" />
+        </div>
+        <b>{{ element.name }} </b>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Date1">
+      <th mat-header-cell *matHeaderCellDef>
+        <b>{{ date | date: 'dd-MM-YYYY' }}</b>
+      </th>
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="Date2">
+      <th mat-header-cell *matHeaderCellDef>
+        <b>{{ date | date: 'dd-MM-YYYY' }}</b>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.Date2 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Date3">
+      <th mat-header-cell *matHeaderCellDef>
+        <b> {{ date | date: 'dd-MM-YYYY' }}</b>
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.Date3 }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"> </mat-paginator> -->
+
+  <table mat-table [dataSource]="dataSource" class="clinic-table">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef>
+        <ng-container *ngIf="column !== 'name'">
+          <b>{{ column }}</b>
+        </ng-container>
+      </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{ name: column === 'name' }">
+        <ng-container *ngIf="column === 'name'">
+          <div class="form-icon d-flex align-items-center">
+            <img src="assets/img/{{ element.img }}.svg" alt="" class="me-1" />
+            <b>{{ element[column] }}</b>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="column !== 'name'">
+          <!--   {{ element[column] }} -->
+          <div class="mx-1" [innerHTML]="element[column]"></div>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<div>
+  <div class="back-btn" *ngIf="stepper.selectedIndex !== 0"><a role="button" (click)="goBack()">Prev</a></div>
+  <div class="next-btn">
+    <a role="button" (click)="goForward()">Next</a>
+  </div>
+</div>

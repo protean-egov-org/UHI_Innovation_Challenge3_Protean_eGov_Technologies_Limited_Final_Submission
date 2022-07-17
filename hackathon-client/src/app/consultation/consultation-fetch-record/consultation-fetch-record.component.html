@@ -1,0 +1,53 @@
+<div class="mt-2">
+  <div class="content">
+    <form class="fetch-form">
+      <div class="input-group half-col right">
+        <!--  <label>Select Lab</label>
+        <label class="labelsize14">Select Lab</label>
+        <select id="selectLab" class="select-area" [formControl]="selectLab">
+          <option>
+          </option>
+        </select> -->
+        <mat-form-field>
+          <mat-label>External Source</mat-label>
+          <mat-select [formControl]="selectLab">
+            <mat-option *ngFor="let source of sources" [value]="source">
+              {{ source.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- <div class="input-group half-col right">
+                <label class="labelsize14">
+                    Report Type
+                </label>
+                <label class="checkbox">
+                    Diagnostic Report
+                    <input type="checkbox" formControlName="terms" required />
+                </label>
+                <label class="checkbox">
+                    OP Consultation
+                    <input type="checkbox" formControlName="terms" required />
+                </label>
+            </div> -->
+      <!-- <div class="input-group half-col left">
+                <label>Enter OTP to obtain patient consent of sharing of Health record</label>
+                <input type="text" formControlName="mobileNo" length="10" numberOnly autocomplete="off" />
+                <button
+                type="button"
+                class="button otp-btn"
+                style="font-size: 13px"
+              >
+                RESEND OTP
+              </button>
+              </div> -->
+    </form>
+  </div>
+</div>
+
+<div>
+  <div class="back-btn" *ngIf="stepper.selectedIndex !== 0"><a role="button" (click)="goBack()">Prev</a></div>
+  <div class="next-btn">
+    <a role="button" (click)="goForward()">Next</a>
+  </div>
+</div>

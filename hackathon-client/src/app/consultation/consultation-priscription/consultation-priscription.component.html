@@ -1,0 +1,19 @@
+<ngx-spinner>
+  <p class="loading">Loading...</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-12">
+    <embed *ngIf="pdfURL; else noDataFound" [attr.src]="pdfURL" type="application/pdf" class="w-100 pdf-viwer" />
+    <ng-template #noDataFound>
+      <div class="ml-2"></div>
+    </ng-template>
+  </div>
+</div>
+
+<button class="btn btn-primary mt-4 btncr">Save & Submit</button>
+<div>
+  <div class="back-btn" *ngIf="stepper.selectedIndex !== 0"><a role="button" (click)="goBack()">Prev</a></div>
+  <div class="next-btn">
+    <a role="button" (click)="goForward()">Next</a>
+  </div>
+</div>

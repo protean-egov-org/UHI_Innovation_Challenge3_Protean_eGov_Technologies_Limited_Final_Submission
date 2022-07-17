@@ -1,0 +1,217 @@
+<ngx-spinner>
+  <p class="loading">Loading...</p>
+</ngx-spinner>
+<div class="resp-tabs-container hor_1" *ngIf="!pdfURL">
+  <div
+    class="first resp-tab-content hor_1 resp-tab-content-active"
+    aria-labelledby="hor_1_tab_item-0"
+    style="display: block"
+  >
+    <div class="register-form tab-form">
+      <form>
+        <div class="form-col">
+          <div class="form-icon">
+            <img src="assets/img/symptoms.svg" alt="" />
+          </div>
+
+          <mat-form-field class="input-group">
+            <mat-label class="input-label">Search Symptoms</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Search Symptoms Here"
+              [matAutocomplete]="auto"
+              [formControl]="searchSymptomsCtrl"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngIf="isSymptomLoading"
+                ><mat-progress-bar mode="indeterminate"></mat-progress-bar
+              ></mat-option>
+              <ng-container *ngIf="!isSymptomLoading">
+                <mat-option
+                  *ngFor="let symptom of filteredSymptoms"
+                  [value]="symptom.name"
+                  (onSelectionChange)="selectSymptom(symptom)"
+                >
+                  <span>{{ symptom.name }}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+            <button class="add2"></button>
+          </mat-form-field>
+
+          <div class="add2-details">
+            <ng-container *ngFor="let symptom of selectedSymptoms">
+              <div class="add-col">
+                {{ symptom.name }}
+                <!--    <button class="remove">
+                  <img src="assets/img/remove2.svg" alt="" />
+                </button> -->
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <div class="form-icon">
+            <img src="assets/img/diagnosis.svg" alt="" />
+          </div>
+          <mat-form-field class="input-group">
+            <mat-label class="input-label">Search Diagnosis</mat-label>
+            <input
+              matInput
+              placeholder="Search Diagnosis Here"
+              [matAutocomplete]="auto1"
+              [formControl]="searchDiagnosisCtrl"
+            />
+            <mat-autocomplete #auto1="matAutocomplete">
+              <mat-option
+                *ngFor="let diagnosis of filteredDiagnosis"
+                [value]="diagnosis.name"
+                (onSelectionChange)="selectDiagnosis(diagnosis)"
+              >
+                <span>{{ diagnosis.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+            <button class="add2"></button>
+          </mat-form-field>
+          <div class="add2-details">
+            <ng-container *ngFor="let diagnosis of selectedDiagnosis">
+              <div class="add-col">
+                {{ diagnosis.name }}
+                <!--    <button class="remove">
+                  <img src="assets/img/remove2.svg" alt="" />
+                </button> -->
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-col-inside">
+            <div class="form-icon">
+              <img src="assets/img/medicine.svg" alt="" />
+            </div>
+            <mat-form-field class="input-group">
+              <mat-label class="input-label">Search Medicine</mat-label>
+              <input
+                matInput
+                placeholder="Search Medicine Here"
+                [matAutocomplete]="auto2"
+                [formControl]="searchMedicineCtrl"
+              />
+              <mat-autocomplete #auto2="matAutocomplete">
+                <mat-option
+                  *ngFor="let medicine of filteredMedicine"
+                  [value]="medicine.name"
+                  (onSelectionChange)="selectMedicine(medicine)"
+                >
+                  <span>{{ medicine.name }}</span>
+                </mat-option>
+              </mat-autocomplete>
+              <button class="add2"></button>
+            </mat-form-field>
+            <div class="add2-details">
+              <ng-container *ngFor="let medicine of selectedMedicine">
+                <div class="add-col">
+                  {{ medicine.name }}
+                  <!--  <button class="remove">
+                    <img src="assets/img/remove2.svg" alt="" />
+                  </button> -->
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-col last-col">
+          <div class="form-icon">
+            <img src="assets/img/advice.svg" alt="" />
+          </div>
+          <mat-form-field class="input-group">
+            <mat-label class="input-label">Search Advice</mat-label>
+            <input
+              matInput
+              placeholder="Search Advice Here"
+              [matAutocomplete]="auto3"
+              [formControl]="searchAdviceCtrl"
+            />
+            <mat-autocomplete #auto3="matAutocomplete">
+              <mat-option
+                *ngFor="let advice of filteredAdvice"
+                [value]="advice.name"
+                (onSelectionChange)="selectAdvice(advice)"
+              >
+                <span>{{ advice.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+            <button class="add2"></button>
+          </mat-form-field>
+          <div class="add2-details">
+            <ng-container *ngFor="let advice of selectedAdvice">
+              <div class="add-col">
+                {{ advice.name }}
+                <!-- <button class="remove">
+                  <img src="assets/img/remove2.svg" alt="" />
+                </button> -->
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="form-col last-col">
+          <div class="form-icon-vital form-icon">
+            <img src="assets/img/vaccine-management.png" alt="" />
+          </div>
+          <label class="input-group-vital input-label"> Enter Vital </label>
+          <div class="mt-5 col-10 vitals-form" [formGroup]="vitalFormGroup">
+            <ul>
+              <li class="mat-container">
+                <mat-label> Temperature :</mat-label>
+                <mat-form-field class="example-full-width linem" appearance="fill">
+                  <input type="number" matInput formControlName="temperature" />
+                </mat-form-field>
+                <span> <sup>0</sup>F</span>
+              </li>
+              <li class="mat-container">
+                <mat-label> Respiratory rate:</mat-label>
+                <mat-form-field class="example-full-width linemO" appearance="fill">
+                  <input type="number" matInput formControlName="respiratoryRate" />
+                </mat-form-field>
+                <span> Breathes/min</span>
+              </li>
+              <li class="mat-container">
+                <mat-label> Heart rate(Pulse rate) :</mat-label>
+                <mat-form-field class="example-full-width linemT" appearance="fill">
+                  <input type="number" matInput formControlName="heartRate" />
+                </mat-form-field>
+                <span>Beats/min</span>
+              </li>
+              <li class="mat-containerB">
+                <mat-label> Blood pressure : </mat-label>
+                <mat-form-field class="example-full-width linemTT" appearance="fill">
+                  <input type="number" matInput formControlName="bloodPressureMin" />
+                </mat-form-field>
+                /
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <input type="number" matInput formControlName="bloodPressureMax" />
+                </mat-form-field>
+                <span>Sys/Dis(mmHg)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--
+        <div class="input-group btn-area form-col">
+          <input type="file" id="browseFile" multiple hidden />
+          <button type="submit" class="submit-main-btn">Upload Prescription</button>
+        </div> -->
+      </form>
+    </div>
+  </div>
+  <button class="btn btn-primary d-block mt-4 btncr ms-auto" (click)="save()">Save & Submit</button>
+</div>
+<ng-container *ngIf="pdfURL">
+  <embed [attr.src]="pdfURL" type="application/pdf" class="w-100 pdf-viwer" />
+
+  <button class="btn btn-primary d-block mt-4 btncr ms-auto" (click)="close()">Close</button>
+</ng-container>
