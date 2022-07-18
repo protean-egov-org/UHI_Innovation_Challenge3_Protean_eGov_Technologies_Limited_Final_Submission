@@ -8,6 +8,7 @@ import { ResponseWrapper } from 'src/app/models/response-wrapper.interface';
 import { RightViewEnum } from 'src/app/models/right-view.enum';
 import { MasterData } from 'src/app/models/rule-engine.model';
 import { SavePrescription } from 'src/app/models/save-prescription.model';
+import { SaveJson } from 'src/app/models/saveJson.model';
 import { SnomadItem } from 'src/app/models/snomad.model';
 import { Vital } from 'src/app/models/vital.model';
 import { ConsulationService } from 'src/app/services/consulation.service';
@@ -194,6 +195,7 @@ export class ConsultationDetailsComponent implements OnInit {
   }
 
   save() {
+    console.log("enter in save");
     this.consulationService.uniqueId = new Date().getTime();
     const { temperature, respiratoryRate, bloodPressureMin, bloodPressureMax, heartRate } = this.vitalFormGroup.value;
     const data = {
@@ -214,17 +216,42 @@ export class ConsultationDetailsComponent implements OnInit {
     this.consulationService.savePrescription(data).subscribe({
       next: (res: ResponseWrapper<string>) => {
         if (res) {
+          console.log("success");
           this.toastMessageService.showSuccessMsg(res.response);
           this.getPrescriptionMedicationDetails();
+          this.saveJson();
         }
         this.spinner.hide();
       },
       error: (err) => {
+        console.log("error");
         this.spinner.hide();
         this.toastMessageService.showErrorMsg('Error');
       },
     });
   }
+
+  saveJson(){
+      const data = {
+        uniqueId: this.consulationService.uniqueId,
+        patientName: this.consulationService.patient.value?.ptName,
+        doctorName: this.consulationService.patient.value?.drName,
+       
+      } as SaveJson;
+      this.spinner.show();
+      this.consulationService.saveJson(data).subscribe({
+        next: (res: ResponseWrapper<string>) => {
+          if (res) {
+            this.toastMessageService.showSuccessMsg(res.response);
+          }
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.toastMessageService.showErrorMsg('Error');
+        },
+      });
+    }
 
   close() {
     this.stepper.selectedIndex = 0;

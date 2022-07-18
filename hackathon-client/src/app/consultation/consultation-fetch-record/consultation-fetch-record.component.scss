@@ -11,6 +11,11 @@ $asset-image-path: '~src/assets/img';
   padding: 22px 0px 0 37px;
 }
 
+.btncr {
+  background: #e43927;
+  border: 1px solid;
+}
+
 .fetch-form {
   display: flex;
   flex-direction: column;
@@ -80,7 +85,7 @@ button.submit-main-btn {
 }
 
 .input-group {
-  height: 60px;
+  height: 200px;
   float: left;
   text-align: left;
 }

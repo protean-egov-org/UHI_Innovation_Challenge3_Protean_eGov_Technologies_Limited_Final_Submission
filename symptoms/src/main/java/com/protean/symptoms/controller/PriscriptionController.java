@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class PriscriptionController {
    }
 	
 	@GetMapping(value = "/getPriscriptionReport/{uniqueId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MainResponseDTO<PriscriptionReportResponse>> getPriscriptionReport(@PathVariable("uniqueId") Integer uniqueId) {
+	public ResponseEntity<MainResponseDTO<PriscriptionReportResponse>> getPriscriptionReport(@PathVariable("uniqueId") BigInteger uniqueId) {
 		logger.info("Request Receive for savePriscriptionDtls");
 		 
 		return ResponseEntity.status(HttpStatus.OK).body(priscriptionService.fetchPriscriptionReport(uniqueId));
@@ -53,5 +54,18 @@ public class PriscriptionController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(priscriptionService.fetchHistoricalData());
 	}
-	
+
+	@GetMapping(value = "/external-data", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MainResponseDTO<List<ExternalDTO>>> getExternalData() {
+		logger.info("Request Receives for getHistoricalData");
+
+		return ResponseEntity.status(HttpStatus.OK).body(priscriptionService.fetchExternalData());
+	}
+
+	@GetMapping(value = "/getFetchRecords", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MainResponseDTO<List<ReportRespDTO>>> getFetchRecords() {
+		logger.info("Request Receives for getFetchRecords");
+
+		return ResponseEntity.status(HttpStatus.OK).body(priscriptionService.getFetch());
+	}
 }

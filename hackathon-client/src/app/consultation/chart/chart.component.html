@@ -17,7 +17,27 @@
 >
 </highcharts-chart> -->
 
-<highcharts-chart [Highcharts]="highcharts" [options]="tempChartOptions"></highcharts-chart>
-<highcharts-chart [Highcharts]="highcharts" [options]="resChartOptions"></highcharts-chart>
-<highcharts-chart [Highcharts]="highcharts" [options]="heartChartOptions"></highcharts-chart>
-<highcharts-chart [Highcharts]="highcharts" [options]="bloodChartOptions"></highcharts-chart>
+<highcharts-chart
+  [Highcharts]="highcharts"
+  [oneToOne]="true"
+  [(update)]="updateFlag"
+  [options]="tempChartOptions"
+></highcharts-chart>
+<highcharts-chart
+  [Highcharts]="highcharts"
+  [oneToOne]="true"
+  [(update)]="updateFlag"
+  [options]="resChartOptions"
+></highcharts-chart>
+<highcharts-chart
+  [Highcharts]="highcharts"
+  [oneToOne]="true"
+  [(update)]="updateFlag"
+  [options]="heartChartOptions"
+></highcharts-chart>
+<highcharts-chart
+  [Highcharts]="highcharts"
+  [oneToOne]="true"
+  [(update)]="updateFlag"
+  [options]="bloodChartOptions"
+></highcharts-chart>

@@ -53,8 +53,18 @@
           </div>
         </ng-container>
         <ng-container *ngIf="column !== 'name'">
+          <ng-container *ngIf="!element[column].startsWith('/var')">
+            <div class="mx-1" [innerHTML]="element[column]"></div>
+          </ng-container>
+          <ng-container *ngIf="element[column].startsWith('/var')">
+            <img
+              src="assets/img/download.svg"
+              (click)="download(element[column])"
+              role="button"
+              class="w-auto ms-2 download_button"
+            />
+          </ng-container>
           <!--   {{ element[column] }} -->
-          <div class="mx-1" [innerHTML]="element[column]"></div>
         </ng-container>
       </td>
     </ng-container>

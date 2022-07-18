@@ -21,7 +21,12 @@ export class ConsultationFetchRecordComponent implements OnInit {
     this.consultationService.records.next([]);
     this.consultationService.rightView.next(RightViewEnum.records);
     this.consultationService.fetchRecords().subscribe((res: LabRecord[]) => {
-      this.sources = res;
+      this.sources = res.map(r => {
+        return {
+          ...r,
+          recordsPath: (r.recordsPath || []).map(p => p?.replace('/var/telemedicine/', `${environment.fileUrl}`))
+        }
+      });
     })
     this.getRecords();
 
@@ -42,9 +47,9 @@ export class ConsultationFetchRecordComponent implements OnInit {
 
   private getRecords() {
     this.selectLab.valueChanges.subscribe((lab: LabRecord) => {
-      lab.recordsPath.forEach(r => {
+      /* lab.recordsPath.forEach(r => {
         r.replace('/var/telemedicine/', `${environment.fileUrl}`);
-      })
+      }) */
       this.consultationService.records.next(lab.recordsPath);
     })
   }

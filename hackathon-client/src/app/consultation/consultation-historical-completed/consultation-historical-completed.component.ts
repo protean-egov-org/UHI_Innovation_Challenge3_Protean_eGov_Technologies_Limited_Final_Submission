@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { HistoricalRecord } from 'src/app/models/historical-record.model';
 import { RightViewEnum } from 'src/app/models/right-view.enum';
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./consultation-historical-completed.component.scss'],
   providers: [DatePipe],
 })
-export class ConsultationHistoricalCompletedComponent implements OnInit {
+export class ConsultationHistoricalCompletedComponent implements OnInit, AfterViewChecked {
   displayedColumns: string[] = ['name'];
   dataSource: any = [
     { name: 'Symptons', img: 'symptoms' },
@@ -30,7 +30,7 @@ export class ConsultationHistoricalCompletedComponent implements OnInit {
 
   historicalRecords: HistoricalRecord[] = [];
 
-  constructor(private datePipe: DatePipe, private consulationService: ConsulationService) { }
+  constructor(private datePipe: DatePipe, private consulationService: ConsulationService, private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.consulationService.rightView.next(RightViewEnum.chart);
@@ -38,6 +38,17 @@ export class ConsultationHistoricalCompletedComponent implements OnInit {
       this.historicalRecords = res;
       this.buildTable();
     });
+  }
+
+  ngAfterViewChecked() {
+    /*  if (this.elementRef.nativeElement.querySelectorAll('.download_button')) {
+       const nodes = this.elementRef.nativeElement.querySelectorAll('.download_button');
+       nodes.forEach((n: any) => {
+         n.addEventListener('click', this.download.bind(this));
+       })
+
+       //  this.elementRef.nativeElement.querySelector('#my-button').addEventListener('click', this.download.bind(this));
+     } */
   }
 
   goBack() {
@@ -78,19 +89,9 @@ export class ConsultationHistoricalCompletedComponent implements OnInit {
       case 'Vitals':
         return `Tempertature ${data?.temperature}, Respiratory rate ${data?.respiratoryRate}, Heart rate ${data?.heartRate}, Blood pressure ${data?.bloodPressureMin}/${data?.bloodPressureMax}`;
       case 'Document':
-        return `<img
-        src="assets/img/download.svg"
-        (click)="download(data.pdfPath)"
-        role="button"
-        class="w-auto ms-2"
-      />`;
+        return `${data?.pdfPath}`;
       case 'Json':
-        return `<img
-        src="assets/img/download.svg"
-        (click)="download(data.jsonPath)"
-        role="button"
-        class="w-auto ms-2"
-      />`;
+        return `${data?.jsonPath}`;
       default:
         return '';
     }

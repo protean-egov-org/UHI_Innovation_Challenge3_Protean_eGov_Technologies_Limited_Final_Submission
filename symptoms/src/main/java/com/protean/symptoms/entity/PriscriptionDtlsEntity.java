@@ -1,13 +1,9 @@
 package com.protean.symptoms.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.Data;
+
+import javax.persistence.*;
+import java.math.BigInteger;
 
 @Data
 @Entity
@@ -54,9 +50,12 @@ public class PriscriptionDtlsEntity {
 	
 	@Column(name="pd_priscription_path")
 	private String pdfPath;
+
+	@Column(name="pd_json_path")
+	private String jsonPath;
 	
 	@Column(name="uniqueid")
-	private Integer uniqueId;
+	private BigInteger uniqueId;
 	
 	
 	
