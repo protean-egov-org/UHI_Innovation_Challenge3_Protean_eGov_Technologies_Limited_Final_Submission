@@ -3,16 +3,21 @@ package com.protean.symptoms.service;
 import com.protean.symptoms.dto.*;
 
 import javax.validation.Valid;
+import java.math.BigInteger;
 import java.util.List;
 
 public interface PriscriptionService {
 
 	public MainResponseDTO<String> fetchSymptomDetailsList(@Valid MainRequestDTO<SavePriscriptionRequest> saveRequest);
 
-	public MainResponseDTO<PriscriptionReportResponse> fetchPriscriptionReport(Integer uniqueId);
+	public MainResponseDTO<PriscriptionReportResponse> fetchPriscriptionReport(BigInteger uniqueId);
 
 	public MainResponseDTO<List<PatientReportDTO>> getPatientReportDetails(String patientName);
 
 	public MainResponseDTO<List<HistoricalDTO>> fetchHistoricalData();
+
+	public MainResponseDTO<List<ExternalDTO>> fetchExternalData();
+
+	MainResponseDTO<List<ReportRespDTO>> getFetch();
 
 }

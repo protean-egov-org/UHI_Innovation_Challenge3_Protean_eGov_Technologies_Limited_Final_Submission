@@ -1,5 +1,7 @@
 package com.protean.symptoms.dto;
 
+import java.math.BigInteger;
+
 import lombok.Data;
 
 @Data
@@ -27,5 +29,5 @@ public class SavePriscriptionRequest {
 
 	private Integer heartRate;
 	
-	private Integer uniqueId;
+	private BigInteger uniqueId;
 }

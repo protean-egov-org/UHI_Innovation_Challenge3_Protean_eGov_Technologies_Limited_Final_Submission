@@ -15,6 +15,7 @@ import { LabRecord } from '../models/lab-records.model';
 import { MasterData, RuleEngine } from '../models/rule-engine.model';
 import { mockRule } from '../models/mock-rule.const';
 import { Report } from '../models/report.model';
+import { SaveJson } from '../models/saveJson.model';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +47,12 @@ export class ConsulationService {
 
   savePrescription(data: SavePrescription): Observable<ResponseWrapper<string>> {
     const payload = { request: data };
-    return this.http.post<ResponseWrapper<string>>(`${this.baseUrl}/priscription/savePriscriptionDtls`, payload);
+    return this.http.post<ResponseWrapper<string>>(`${this.baseUrl}priscription/savePriscriptionDtls`, payload);
+  }
+
+  saveJson(data: SaveJson): Observable<ResponseWrapper<string>> {
+    const payload = { request: data };
+    return this.http.post<ResponseWrapper<string>>(`${this.baseUrl}/transfer/savejson`, payload);
   }
 
   submitPrescription(data: SavePrescription): Observable<ResponseWrapper<string>> {
@@ -73,7 +79,7 @@ export class ConsulationService {
 
   getPriscriptionReport(id: number): Observable<PrescriptionReport> {
     return this.http
-      .get<ResponseWrapper<PrescriptionReport>>(`${this.baseUrl}/getPriscriptionReport/${id}`)
+      .get<ResponseWrapper<PrescriptionReport>>(`${this.baseUrl}/priscription/getPriscriptionReport/${id}`)
       .pipe(map((res) => res.response));
   }
 

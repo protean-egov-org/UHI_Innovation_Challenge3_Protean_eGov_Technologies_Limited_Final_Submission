@@ -2,7 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import { Options, SeriesOptionsType } from 'highcharts/highstock';
+import { HistoricalRecord } from 'src/app/models/historical-record.model';
 import { mockHistoricalRecords } from 'src/app/models/mock-temperature';
+import { ConsulationService } from 'src/app/services/consulation.service';
 
 @Component({
   selector: 'app-chart',
@@ -13,20 +15,32 @@ export class ChartComponent implements OnInit {
   highcharts: typeof Highcharts = Highcharts;
 
   tempChartOptions: Options = { ...chartConfig };
-  resChartOptions: Options = { ...chartConfig };
-  heartChartOptions: Options = { ...chartConfig };
-  bloodChartOptions: Options = { ...chartConfig };
+  resChartOptions: Options = { ...chartConfigOne };
+  heartChartOptions: Options = { ...chartConfigTwo };
+  bloodChartOptions: Options = { ...chartConfigThree };
 
-  historicalRecords = mockHistoricalRecords;
+  historicalRecords: HistoricalRecord[] = [];
+  updateFlag = false;
+
+  // tempChartOptions ={
+  //   title: {
+  //     text: "Monthly Average Temperature"
+  //  },
+  // }
 
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private consultationService: ConsulationService) { }
 
   ngOnInit(): void {
-    this.setTemperatureChart();
-    this.setRespiratoryChart();
-    this.setHeartChart();
-    this.setBloodChart();
+    this.consultationService.viewHistoricalAppointments().subscribe(res => {
+      this.historicalRecords = res?.slice(Math.max(res.length - 3, 0));
+      this.setTemperatureChart();
+      this.setRespiratoryChart();
+      this.setHeartChart();
+      this.setBloodChart();
+      this.updateFlag = true;
+    })
+
   }
   /*
     selectionChange(event: MatSelectChange) {
@@ -113,13 +127,13 @@ export class ChartComponent implements OnInit {
     })
 
     seriesOptions.push({
-      name: 'Patient Min Blood Pressure',
+      name: 'Patient BP(sys)',
       data: minData,
       type: 'line',
     });
 
     seriesOptions.push({
-      name: 'Patient Max Blood Pressure',
+      name: 'Patient BP(Dis)',
       data: maxData,
       type: 'line',
     });
@@ -131,12 +145,12 @@ export class ChartComponent implements OnInit {
       maxRecords.push([d, max]);
     })
     seriesOptions.push({
-      name: 'Min Blood Pressure',
+      name: 'Normal BP(Sys)',
       data: minRecords,
       type: 'line',
     })
     seriesOptions.push({
-      name: 'Max Blood Pressure',
+      name: 'Normal BP(Dis)',
       data: maxRecords,
       type: 'line',
     })
@@ -255,9 +269,89 @@ export class ChartComponent implements OnInit {
 
 
 const chartConfig = {
+    title:{
+      text: 'Temperature'
+    },
   rangeSelector: {
     selected: 5,
   },
+  yAxis: {          
+    title:{
+       text:"Temperature °C"
+    } 
+ },
+  xAxis: {
+    type: 'category',
+  },
+  tooltip: {
+    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+    valueDecimals: 2,
+    split: true,
+  },
+  series: [],
+} as Options;
+
+const chartConfigOne = {
+  title:{
+    text: 'Respiratory Rate'
+  },
+
+  yAxis: {          
+    title:{
+       text:"Breaths/Min"
+    } 
+ },
+  rangeSelector: {
+    selected: 5,
+  },
+  xAxis: {
+    type: 'category',
+  },
+  tooltip: {
+    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+    valueDecimals: 2,
+    split: true,
+  },
+  series: [],
+} as Options;
+
+
+
+const chartConfigTwo = {
+  title:{
+    text: 'Heart Rate'
+  },
+  rangeSelector: {
+    selected: 5,
+  },
+  yAxis: {          
+    title:{
+       text:"Beats/Min"
+    } 
+ },
+  xAxis: {
+    type: 'category',
+  },
+  tooltip: {
+    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+    valueDecimals: 2,
+    split: true,
+  },
+  series: [],
+} as Options;
+
+const chartConfigThree = {
+  title:{
+    text: 'Blood Pressure'
+  },
+  rangeSelector: {
+    selected: 5,
+  },
+  yAxis: {          
+    title:{
+       text:"Sys/Dis"
+    } 
+ },
   xAxis: {
     type: 'category',
   },
